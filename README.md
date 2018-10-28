@@ -7,7 +7,8 @@
 ``` bash
 # install dependencies
 npm install
-
+npm install chromedriver --chromedriver_cdnurl=http://cdn.npm.taobao.org/dist/chromedriver
+npm rebuild node-sass
 # serve with hot reload at localhost:8080
 npm run dev
 
