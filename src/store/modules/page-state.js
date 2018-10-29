@@ -16,7 +16,10 @@ const getters = {
 
 // actions
 const actions = {
- 
+ 	updatePageState ({commit}, obj) {
+		commit(types.UPDATE_PAGESTATE, obj)
+	} 
+
 }
 
 // mutations
