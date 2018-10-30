@@ -12,6 +12,10 @@ const state = {
 // getters
 const getters = {
   currentPageState: state => state.pagestate,
+  getObjByName:  (state) => (name) => {
+     state.pagestate[name]
+  }
+  
 }
 
 // actions
