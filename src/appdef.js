@@ -1,23 +1,27 @@
 import router from './router'
-
+import store  from './store'
 import api from '@/api/api'
 const _import = require('./router/_import_' + process.env.NODE_ENV)//获取组件的方法
 import Layout from '@/views/layout' //Layout 是架构组件，不在后台返回，在文件里单独引入
-
 
 var appRoutes //用来获取后台拿到的路由
 
 router.beforeEach((to, from, next) => {
   if (!appRoutes) {//不加这个判断，路由会陷入死循环
-    if (!getObjArr('router')) {
+    store.commit('pagestate/' + types.FETCH_PAGESTATE)
+    appRoutes = store.getters['pagestate/getObjByName']("approutes")
+    if (!appRoutes) {
      api.getAppDef('callcenter','enu').then(res => {
         appRoutes = res.data.data.router//后台拿到路由
-        saveObjArr('router', appRoutes) //存储路由到localStorage
+        obj = {"approutes",appRoutes}
+        store.dispatch("pagestate/updatePageState",obj)
+        //saveObjArr('router', appRoutes) //存储路由到localStorage
 
         routerGo(to, next)//执行路由跳转方法
       })
     } else {//从localStorage拿到了路由
-      appRoutes = getObjArr('router')//拿到路由
+      //appRoutes = getObjArr('router')//拿到路由
+      //appRoutes = store.getters['pagestate/getObjByName']("approutes")
       routerGo(to, next)
     }
   } else {
@@ -30,18 +34,10 @@ router.beforeEach((to, from, next) => {
 function routerGo(to, next) {
   appRoutes = filterAsyncRouter(appRoutes) //过滤路由
   router.addRoutes(appRoutes) //动态添加路由
-  global.antRouter = appRoutes //将路由数据传递给全局变量，做侧边栏菜单渲染工作
+  //global.antRouter = appRoutes //将路由数据传递给全局变量，做侧边栏菜单渲染工作
   next({ ...to, replace: true })
 }
 
-function saveObjArr(name, data) { //localStorage 存储数组对象的方法
-  localStorage.setItem(name, JSON.stringify(data))
-}
-
-function getObjArr(name) { //localStorage 获取数组对象的方法
-  return JSON.parse(window.localStorage.getItem(name));
-
-}
 
 function filterAsyncRouter(asyncRouterMap) { //遍历后台传来的路由字符串，转换为组件对象
   const accessedRouters = asyncRouterMap.filter(route => {

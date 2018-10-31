@@ -6,14 +6,16 @@
 
 <script>
 import sidebarItem from './sidebarItem'
+import { mapGetters, mapState} from 'vuex'
 
 export default {
   components: { sidebarItem },
   computed: {
-    routes() {
-      return global.antRouter
-    }
-   
+    ...mapState({
+      routes: state =>  state.pagestate["approutes"] || []
+    }),
   }
+  
+ 
 }
 </script>

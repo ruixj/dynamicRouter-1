@@ -21,16 +21,25 @@ const getters = {
 // actions
 const actions = {
  	updatePageState ({commit}, obj) {
-		commit(types.UPDATE_PAGESTATE, obj)
+	   commit(types.UPDATE_PAGESTATE, obj)
 	} 
-
 }
 
 // mutations
 const mutations = { 
   [types.UPDATE_PAGESTATE] (state,obj) {
     state.pagestate[obj.fieldname] = obj.fieldvalue
-  } 
+    storage.set(obj.fieldname, obj.fieldvalue)
+  }, 
+  [types.FETCH_PAGESTATE] (state,fieldname) {
+    state.pagestate[fieldname] = storage.get(fieldname)
+  },
+
+  [types.DELETE_PAGESTATE] (state,fieldname) {
+    storage.remove(fieldname)
+    if (state.pagestate[fieldname] )
+       delete state.pagestate[fieldname] 
+  }
 }
 
 export default {
