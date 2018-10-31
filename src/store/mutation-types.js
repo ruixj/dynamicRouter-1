@@ -4,5 +4,5 @@
 export const UPDATE_PAGESTATE  = 'UPDATE_PAGESTATE'
 export const FETCH_PAGESTATE   = 'FETCH_PAGESTATE'
 export const DELETE_PAGESTATE  = 'DELETE_PAGESTATE'
-
+export const SET_HEADMENU      = 'SET_HEADMENU'
  

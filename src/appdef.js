@@ -1,6 +1,8 @@
 import router from './router'
 import store  from './store'
-import api from '@/api/api'
+import { getAppDef } from '@/api/api'
+
+import * as types from '@/store/mutation-types'
 const _import = require('./router/_import_' + process.env.NODE_ENV)//获取组件的方法
 import Layout from '@/views/layout' //Layout 是架构组件，不在后台返回，在文件里单独引入
 
@@ -11,9 +13,9 @@ router.beforeEach((to, from, next) => {
     store.commit('pagestate/' + types.FETCH_PAGESTATE)
     appRoutes = store.getters['pagestate/getObjByName']("approutes")
     if (!appRoutes) {
-     api.getAppDef('callcenter','enu').then(res => {
+        getAppDef('callcenter','enu').then(res => {
         appRoutes = res.data.data.router//后台拿到路由
-        obj = {"approutes",appRoutes}
+        obj = {"approutes":appRoutes}
         store.dispatch("pagestate/updatePageState",obj)
         //saveObjArr('router', appRoutes) //存储路由到localStorage
 

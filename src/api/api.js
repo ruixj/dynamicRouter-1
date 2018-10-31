@@ -5,9 +5,9 @@ import NetWorking from '@/utils/networking'
 const URL_GET_APPDEF = '/api/uidef/app/:name/:lang';
  
 export function getAppDef(appname,applang){
-   pathparams = {
-    name:appname,
-    lang:applang
+   var pathparams = {
+    "name":appname,
+    "lang":applang
   }
   return NetWorking.doGet(URL_GET_APPDEF, 
                      pathparams, 
