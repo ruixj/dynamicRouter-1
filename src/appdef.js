@@ -14,7 +14,7 @@ router.beforeEach((to, from, next) => {
     appRoutes = store.getters['pagestate/getObjByName']("approutes")
     if (!appRoutes) {
         getAppDef('callcenter','enu').then(res => {
-        appRoutes = res.data.data.router//后台拿到路由
+        appRoutes = res.data.application//后台拿到路由
         obj = {"approutes":appRoutes}
         store.dispatch("pagestate/updatePageState",obj)
         //saveObjArr('router', appRoutes) //存储路由到localStorage
@@ -57,4 +57,8 @@ function filterAsyncRouter(asyncRouterMap) { //遍历后台传来的路由字符
   })
 
   return accessedRouters
+}
+
+function convertAppdef2Router(appDef){
+	
 }
