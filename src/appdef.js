@@ -59,6 +59,31 @@ function filterAsyncRouter(asyncRouterMap) { //遍历后台传来的路由字符
   return accessedRouters
 }
 
+
 function convertAppdef2Router(appDef){
-	
+   	
+}
+
+function processObjdef(objdef){
+   routerobj = {}
+   if(objdef.type == 'application'){
+      routerobj.path = objdef.path
+      routerobj.component =  _import(objdef.component)
+      
+      if(objdef.defaultscreen)
+         routerobj.redirect = objdef.defaultscreen
+         
+      routerobj.children = objdef.children.filter(screenobjdef => {
+         processObjdef(screenobjdef)
+      }
+      )
+      return routerobj
+   }
+   else if(objdef.type = 'screen'){
+   } 
+   else if(objdef.type='view'){
+   
+   }
+   
+   
 }
