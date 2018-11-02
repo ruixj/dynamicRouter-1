@@ -67,8 +67,8 @@ function convertAppdef2Router(appDef){
 function processObjdef(objdef){
    routerobj = {}
    if(objdef.type == 'application'){
-      routerobj.path = objdef.path
-      routerobj.component =  _import(objdef.component)
+      routerobj.path      = objdef.path
+      routerobj.component = _import(objdef.component)
       
       if(objdef.defaultscreen)
          routerobj.redirect = objdef.defaultscreen
@@ -80,9 +80,27 @@ function processObjdef(objdef){
       return routerobj
    }
    else if(objdef.type = 'screen'){
+	  routerobj.path      = objdef.path
+      routerobj.component =  _import(objdef.component)
+      
+      if(objdef.defaultview)
+         routerobj.redirect = objdef.defaultview
+         
+      routerobj.children = objdef.children.filter(viewobjdef => {
+         processObjdef(viewobjdef)
+      }
+      )
+      return routerobj
    } 
    else if(objdef.type='view'){
-   
+   	  routerobj.path      = objdef.path
+      routerobj.component =  _import(objdef.component)
+ 
+      routerobj.children = objdef.children.filter(viewobjdef => {
+         processObjdef(viewobjdef)
+      }
+      )
+      return routerobj
    }
    
    
