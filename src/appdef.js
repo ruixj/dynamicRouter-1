@@ -79,13 +79,7 @@ function processObjdef(objdef,objmap,parentpath){
       routerobj.path      = objdef.path
       routerobj.component = _import(objdef.component)
       
-      if(objdef.defaultscreen){
- 
-         if(parentpath)
-            routerobj.redirect = parentpath + "/" + objdef.defaultscreen
-          else
-            routerobj.redirect = objdef.defaultscreen
-      }
+
       var appobj = {}
       appobj.name = objdef.name
       if(parentpath)
@@ -95,14 +89,21 @@ function processObjdef(objdef,objmap,parentpath){
       else
         appobj.path = objdef.path
          
-      if(objmap["app"] ){
-         objmap["app"].push(appobj)
+      if(objdef.defaultscreen){
+  
+        routerobj.redirect = appobj.path + "/" + objdef.defaultscreen
+          
+      }
+	  
+      if(objmap[parentpath] ){
+         objmap[parentpath].push(appobj)
       }
       else
       {
-         objmap["app"] = []
-         objmap["app"].push(appobj)
+         objmap[parentpath] = []
+         objmap[parentpath].push(appobj)
       }
+       
       
       if (objdef.children && objdef.children.length) { 
        routerobj.children = []
@@ -115,17 +116,11 @@ function processObjdef(objdef,objmap,parentpath){
       return routerobj
    }
    else if(objdef.type == 'screen'){
-	    routerobj.path      = objdef.path
+	  routerobj.path      = objdef.path
       routerobj.component =  _import(objdef.component)
       
  
-      if(objdef.defaultview){
- 
-         if(parentpath)
-            routerobj.redirect = parentpath + "/" + objdef.defaultview
-          else
-            routerobj.redirect = objdef.defaultview
-      }         
+      
 
       var screenobj = {}
       screenobj.name = objdef.name
@@ -134,13 +129,18 @@ function processObjdef(objdef,objmap,parentpath){
       else
         screenobj.path = objdef.path
       
-      if(objmap["screen"] ){
-         objmap["screen"].push(screenobj)
+      if(objdef.defaultview){
+		  routerobj.redirect = screenobj.path + "/" + objdef.defaultview
+ 
+      }   
+	  
+      if(objmap[parentpath] ){
+         objmap[parentpath].push(screenobj)
       }
       else
       {
-         objmap["screen"] = []
-         objmap["screen"].push(screenobj)
+         objmap[parentpath] = []
+         objmap[parentpath].push(screenobj)
       }
       if (objdef.children && objdef.children.length) { 
         routerobj.children = []        
@@ -163,13 +163,13 @@ function processObjdef(objdef,objmap,parentpath){
       else
         viewobj.path = objdef.path
       
-      if(objmap["view"] ){
-         objmap["view"].push(viewobj)
+      if(objmap[parentpath] ){
+         objmap[parentpath].push(viewobj)
       }
       else
       {
-         objmap["view"] = []
-         objmap["view"].push(viewobj)
+         objmap[parentpath] = []
+         objmap[parentpath].push(viewobj)
       }
       return routerobj
    }
