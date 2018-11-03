@@ -3,8 +3,8 @@ import store  from './store'
 import { getAppDef } from '@/api/api'
 
 import * as types from '@/store/mutation-types'
-const _import = require('./router/_import_' + process.env.NODE_ENV)//获取组件的方法
-import Layout from '@/views/layout' //Layout 是架构组件，不在后台返回，在文件里单独引入
+const _import = require('./async/_import_' + process.env.NODE_ENV)//获取组件的方法
+import Layout from '@/components/layout' //Layout 是架构组件，不在后台返回，在文件里单独引入
 
 var appRoutes //用来获取后台拿到的路由
 
