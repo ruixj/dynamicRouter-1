@@ -2,7 +2,7 @@
 import NetWorking from '@/utils/networking'
     
 //获取验证码
-const URL_GET_APPDEF = '/api/uidef/app/:name/:lang';
+const URL_GET_APPDEF = 'uidef/app/:name/:lang';
  
 export function getAppDef(appname,applang){
    var pathparams = {

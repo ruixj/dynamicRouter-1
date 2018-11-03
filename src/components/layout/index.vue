@@ -8,8 +8,8 @@
 </template>
 a
 <script>
-import AppMain  from '@/views/layout/components/AppMain'//页面布局的右侧区域
-import sidebar  from '@/views/layout/components/sidebar'//页面布局的左侧菜单
+import AppMain  from '@/components/layout/components/AppMain'//页面布局的右侧区域
+import sidebar  from '@/components/layout/components/sidebar'//页面布局的左侧菜单
 
 export default {
   name: 'layout',

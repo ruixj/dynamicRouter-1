@@ -19,7 +19,7 @@ export default {
     ALL: 'all'
   },
 
-  path: '/api/',
+  path: 'http://localhost:8080/api/',
   
   registerRequestInterceptor(configcallback, errorcallback)
   {

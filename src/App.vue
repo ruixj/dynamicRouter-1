@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import sidebar  from '@/views/layout/components/sidebar'//页面布局的左侧菜单
+import sidebar  from '@/components/layout/components/sidebar'//页面布局的左侧菜单
 export default {
   name: 'App' ,
   components: {
