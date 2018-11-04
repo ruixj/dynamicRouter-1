@@ -21,47 +21,20 @@ router.beforeEach((to, from, next) => {
                       "fieldvalue":appdefs
                       }
         store.dispatch("pagestate/updatePageState",obj)
-        
- 
- 
+         
         routerGo(to, next)//执行路由跳转方法
       })
     } else { 
       routerGo(to, next)
     }
   } else {
-    console.log(to)
-    console.log(from)
+    console.log("to:" + to)
+    console.log("from:" + from)
     next()
   }
 
 })
 
-
-function routerGo1(to, next) {
-  appdefs = filterAsyncRouter(appdefs) //过滤路由
-  router.addRoutes(appdefs) //动态添加路由
-  //global.antRouter = appRoutes //将路由数据传递给全局变量，做侧边栏菜单渲染工作
-  next({ ...to, replace: true })
-}
-
-function filterAsyncRouter(asyncRouterMap) { //遍历后台传来的路由字符串，转换为组件对象
-  const accessedRouters = asyncRouterMap.filter(route => {
-    if (route.component) {
-      if (route.component === 'Layout') {//Layout组件特殊处理
-        route.component = Layout
-      } else {
-        route.component = _import(route.component)
-      }
-    }
-    if (route.children && route.children.length) {
-      route.children = filterAsyncRouter(route.children)
-    }
-    return true
-  })
-
-  return accessedRouters
-}
 
 function routerGo(to, next) {
    	var routers = []

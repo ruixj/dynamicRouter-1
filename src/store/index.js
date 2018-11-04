@@ -6,7 +6,7 @@ import Vuex from 'vuex'
 import * as actions from './actions'
  
 import pagestate from './modules/pagestate'
-import headmenu from './modules/headmenu'
+import headmenu  from './modules/headmenu'
 
 Vue.use(Vuex)
 

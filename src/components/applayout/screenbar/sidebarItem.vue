@@ -1,7 +1,7 @@
 <template>
   <div class="menu-wrapper">
     <template v-for="item in routes">
-      <router-link  :to="item.path" :key="item.name">
+      <router-link  :to="item.path">
         <el-menu-item :index="item.path"  >
           <span >{{item.name}}</span>
         </el-menu-item>
@@ -21,6 +21,11 @@ export default {
       type: Boolean,
       default: false
     }
+  },
+  methods: {
+      handleSelect(key, keyPath) {
+        console.log(key, keyPath);
+      }
   }
 }
 </script>

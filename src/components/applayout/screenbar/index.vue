@@ -1,5 +1,5 @@
 <template>
-    <el-menu mode="vertical" unique-opened :default-active="$route.path" background-color="#304156" text-color="#fff" active-text-color="#409EFF">
+    <el-menu mode="vertical" unique-opened :default-active="$route.path" @select="handleSelect" background-color="#304156" text-color="#fff" active-text-color="#409EFF">
       <sidebar-item :routes="routes"></sidebar-item>
     </el-menu>
 </template>
@@ -14,8 +14,12 @@ export default {
     ...mapState({
       routes: state =>  state.pagestate.pagestate["currentappscreens"] || []
     }),
+  },
+  methods: {
+      handleSelect(key, keyPath) {
+        console.log(key, keyPath);
+      }
   }
-  
  
 }
 </script>
