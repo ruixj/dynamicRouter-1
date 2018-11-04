@@ -1,17 +1,17 @@
 <template>
   <div id="app">
     <!-- <img src="./assets/logo.png"> -->
-    <sidebar class="sidebar-container"></sidebar>
+   
     <router-view/>
   </div>
 </template>
 
 <script>
-import sidebar  from '@/components/layout/components/sidebar'//页面布局的左侧菜单
+
 export default {
   name: 'App' ,
   components: {
-    sidebar 
+    
   }  
 }
 </script>

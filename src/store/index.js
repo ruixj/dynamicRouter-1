@@ -13,7 +13,7 @@ Vue.use(Vuex)
 const debug = process.env.NODE_ENV !== 'production'
 
 export default new Vuex.Store({
-  namespaced: true,
+ 
   actions,
   state: {
     loading: true

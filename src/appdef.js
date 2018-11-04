@@ -4,7 +4,7 @@ import { getAppDef } from '@/api/api'
 
 import * as types from '@/store/mutation-types'
 const _import = require('./async/_import_' + process.env.NODE_ENV)//获取组件的方法
-import Layout from '@/components/layout' //Layout 是架构组件，不在后台返回，在文件里单独引入
+//import Layout from '@/components/layout' //Layout 是架构组件，不在后台返回，在文件里单独引入
 
 var appdefs //用来获取后台拿到的路由
 
@@ -15,10 +15,14 @@ router.beforeEach((to, from, next) => {
     
     if (!appdefs) {
       getAppDef('callcenter','enu').then(res => {
-       appdefs = res.data.application//后台拿到路由
+        appdefs = res.data.application//后台拿到路由
         
-        var obj    = {"approutes":appdefs}
+        var obj    = {"fieldname":"approutes",
+                      "fieldvalue":appdefs
+                      }
         store.dispatch("pagestate/updatePageState",obj)
+        
+ 
  
         routerGo(to, next)//执行路由跳转方法
       })
@@ -26,6 +30,8 @@ router.beforeEach((to, from, next) => {
       routerGo(to, next)
     }
   } else {
+    console.log(to)
+    console.log(from)
     next()
   }
 
@@ -59,13 +65,21 @@ function filterAsyncRouter(asyncRouterMap) { //遍历后台传来的路由字符
 
 function routerGo(to, next) {
    	var routers = []
-   	var objmap = {}
+   	var objmap  = {}
    	
     var appRouters =	processObjdef(appdefs,objmap,"")
     
-    var obj = {"objmap":objmap}
+  
+    var obj    = {"fieldname":"objmap",
+                  "fieldvalue":objmap
+                  }
     store.dispatch("pagestate/updatePageState",obj)
-        
+ 
+         obj    = {"fieldname":"currentappscreens",
+                  "fieldvalue":objmap["/"]
+                  }    
+    store.dispatch("pagestate/updatePageState",obj)
+    
     routers.push(appRouters)
     router.addRoutes(routers) //动态添加路由
  
@@ -84,15 +98,19 @@ function processObjdef(objdef,objmap,parentpath){
       appobj.name = objdef.name
       if(parentpath)
       {
-        appobj.path = parentpath + "/" + objdef.path
+        if(parentpath != "/")
+           appobj.path = parentpath + "/" + objdef.path
+        else
+          appobj.path = parentpath   + objdef.path
       }
       else
         appobj.path = objdef.path
          
       if(objdef.defaultscreen){
-  
-        routerobj.redirect = appobj.path + "/" + objdef.defaultscreen
-          
+        if( appobj.path != "/")
+          routerobj.redirect = appobj.path + "/" + objdef.defaultscreen
+        else
+          routerobj.redirect = appobj.path + objdef.defaultscreen
       }
 	  
       if(objmap[parentpath] ){
@@ -118,20 +136,23 @@ function processObjdef(objdef,objmap,parentpath){
    else if(objdef.type == 'screen'){
 	  routerobj.path      = objdef.path
       routerobj.component =  _import(objdef.component)
-      
- 
-      
 
       var screenobj = {}
       screenobj.name = objdef.name
-      if(parentpath)
-        screenobj.path = parentpath + "/" + objdef.path
+      if(parentpath){
+        if(parentpath != "/")
+           screenobj.path = parentpath + "/" + objdef.path
+        else
+          screenobj.path = parentpath   + objdef.path
+      }
       else
         screenobj.path = objdef.path
       
       if(objdef.defaultview){
-		  routerobj.redirect = screenobj.path + "/" + objdef.defaultview
- 
+        if(  screenobj.path != "/")
+          routerobj.redirect = screenobj.path  + "/" + objdef.defaultview
+        else
+          routerobj.redirect = screenobj.path  + objdef.defaultview
       }   
 	  
       if(objmap[parentpath] ){
@@ -142,6 +163,7 @@ function processObjdef(objdef,objmap,parentpath){
          objmap[parentpath] = []
          objmap[parentpath].push(screenobj)
       }
+      
       if (objdef.children && objdef.children.length) { 
         routerobj.children = []        
         objdef.children.forEach(viewobjdef => {
@@ -150,6 +172,7 @@ function processObjdef(objdef,objmap,parentpath){
         }
         )
       }
+      
       return routerobj
    } 
    else if(objdef.type=='view'){
@@ -158,8 +181,12 @@ function processObjdef(objdef,objmap,parentpath){
  
       var viewobj = {}
       viewobj.name = objdef.name
-      if(parentpath)
-        viewobj.path = parentpath + "/" + objdef.path
+      if(parentpath){
+        if(parentpath != "/")
+           viewobj.path = parentpath + "/" + objdef.path
+        else
+          viewobj.path = parentpath   + objdef.path
+      }
       else
         viewobj.path = objdef.path
       

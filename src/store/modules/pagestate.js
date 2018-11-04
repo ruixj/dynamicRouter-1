@@ -13,7 +13,7 @@ const state = {
 const getters = {
   currentPageState: state => state.pagestate,
   getObjByName:  (state) => (name) => {
-     state.pagestate[name]
+     return state.pagestate[name]
   }
   
 }
@@ -28,8 +28,8 @@ const actions = {
 // mutations
 const mutations = { 
   [types.UPDATE_PAGESTATE] (state,obj) {
-    state.pagestate[obj.fieldname] = obj.fieldvalue
-    storage.set(obj.fieldname, obj.fieldvalue)
+    state.pagestate[obj["fieldname"]] = obj["fieldvalue"]
+    storage.set(obj["fieldname"], obj["fieldvalue"])
   }, 
   [types.FETCH_PAGESTATE] (state,fieldname) {
     state.pagestate[fieldname] = storage.get(fieldname)

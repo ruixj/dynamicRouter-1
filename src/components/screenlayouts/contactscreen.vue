@@ -1,6 +1,9 @@
 <template>
-  <div class="app-container">
-    我是主页
+  <div class="view-container">
+    这是contact screen.
+    <transition name="fade" mode="out-in">
+      <router-view></router-view>
+    </transition>
   </div>
 </template>
 
@@ -20,3 +23,5 @@ export default {
   }
 }
 </script>
+
+ 
